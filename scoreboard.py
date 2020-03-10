@@ -8,7 +8,7 @@ from time import sleep
 from signal import pause
 
 #init our gpio pins
-Songs = buzzertones.songs(21)
+Songs = buzzertones.songs(16)
 doingScore = False
 player1pin = 2 #caleb uses 20
 player1points = 0
@@ -17,8 +17,8 @@ player2points = 0
 button1 = Button(player1pin)
 button2 = Button(player2pin)
 player1led = LED(27)
-player2led = LED(20)
-    
+player2led = LED(12)
+
 #respond to goals
 def player1_scored(button):
 	global doingScore
@@ -28,9 +28,13 @@ def player1_scored(button):
 		doingScore = True
 		Songs.play_song("abisong")
 		player1points = player1points + 1
-		player1led.blink(0.3, 0.3, 5)
+		#player1led.blink(0.3, 0.3, 5)
+		player2led.on()
+		player1led.on()
 		update_scoreboard()
-		sleep(5)
+		sleep(3)
+		player2led.off()
+		player1led.off()
 		doingScore = False
 
 def player2_scored(button):
@@ -41,9 +45,13 @@ def player2_scored(button):
 		doingScore = True
 		Songs.play_song("elisong")
 		player2points = player2points + 1
-		player2led.blink(0.3, 0.3, 5)
+		#player2led.blink(0.3, 0.3, 5)
+		player2led.on()
+		player1led.on()
 		update_scoreboard()
-		sleep(5)
+		sleep(3)
+		player2led.off()
+		player1led.off()
 		doingScore = False
 
 #show latest scores on scoreboard
