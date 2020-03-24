@@ -4,6 +4,7 @@ from time import sleep
 
 numVal = 0
 while True:
+	print ("Showing " + str(numVal) + "...")
 	sevensegmentled.outputscore("1", numVal)
 	sevensegmentled.outputscore("2", numVal)
 	numVal = numVal + 1

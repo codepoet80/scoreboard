@@ -2,6 +2,7 @@
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
+debug = True
 
 # Define LED output segments
 #	TODO: The pins should be passed in from the main program as a constructor argument or property
@@ -35,18 +36,18 @@ def outputscore(player, number):
     posCount = 0
     pinArrayToUse = []
     if (player == "red" or player == "1"):
-        # Uncomment the line below for debugging
-        #print ("debug: updating player 1 score to " + str(number) + ":")
+        if (debug == True):
+            print ("debug: updating player 1 score to " + str(number) + ":")
         pinArrayToUse = p1NumSegPins
     elif (player == "blue" or player == "2"):
-        # Uncomment the line below for debugging
-        #print ("debug: updating player 2 score to " + str(number) + ":")
+        if (debug == True):
+            print ("debug: updating player 2 score to " + str(number) + ":")
         pinArrayToUse = p2NumSegPins
     for numSegPin in pinArrayToUse:
         segValues = numShapeValues[number]
         currSegValue = segValues[posCount]
-        # Uncomment the line below for debugging
-        #print ("debug: GPIO.output(" + str(numSegPin) + ", " + str(currSegValue) + ")")
+        if (debug == True):
+            print ("debug: GPIO.output(" + str(numSegPin) + ", " + str(currSegValue) + ")")
         GPIO.output(numSegPin, currSegValue)
         posCount = posCount + 1
     return
