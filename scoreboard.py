@@ -8,16 +8,16 @@ from time import sleep
 from signal import pause
 
 #init our gpio pins
-Songs = buzzertones.songs(16)
+Songs = buzzertones.songs(26)
+resetPin = 21
 doingScore = False
-player1pin = 2 #caleb uses 20
+player1pin = 12
 player1points = 0
-player2pin = 3 #caleb uses 21
+player2pin = 16
 player2points = 0
 button1 = Button(player1pin)
 button2 = Button(player2pin)
-player1led = LED(27)
-player2led = LED(12)
+buttonReset = Button(resetPin)
 
 #respond to goals
 def player1_scored(button):
@@ -28,13 +28,8 @@ def player1_scored(button):
 		doingScore = True
 		Songs.play_song("abisong")
 		player1points = player1points + 1
-		#player1led.blink(0.3, 0.3, 5)
-		player2led.on()
-		player1led.on()
 		update_scoreboard()
-		sleep(3)
-		player2led.off()
-		player1led.off()
+		sleep(2)
 		doingScore = False
 
 def player2_scored(button):
@@ -45,13 +40,8 @@ def player2_scored(button):
 		doingScore = True
 		Songs.play_song("elisong")
 		player2points = player2points + 1
-		#player2led.blink(0.3, 0.3, 5)
-		player2led.on()
-		player1led.on()
 		update_scoreboard()
-		sleep(3)
-		player2led.off()
-		player1led.off()
+		sleep(2)
 		doingScore = False
 
 #show latest scores on scoreboard
@@ -64,8 +54,6 @@ def update_scoreboard():
         reset_game()
     else:
         print ("Player 1: " + str(player1points) + ", Player 2: " + str(player2points), end="\r")
-        sevensegmentled.outputscore("1", player1points)
-        sevensegmentled.outputscore("2", player2points)
 
 #do cool game over stuff
 def game_over():
@@ -84,7 +72,7 @@ def reset_game():
     player2points = 0
     #setup the screen
     os.system("clear")
-    print ("\033[0;37;44mScoreboard version 0.4 (Press Enter to exit):\033[1;36;40m")
+    print ("\033[0;37;44mScoreboard version 0.5 (Press Enter to exit):\033[1;36;40m")
     Songs.play_song("ballgame")
     update_scoreboard()
 
@@ -93,4 +81,5 @@ reset_game()
 #wait for input
 button1.when_pressed = player1_scored
 button2.when_pressed = player2_scored
-input() #wait for enter key to exit program. to wait forever, use pause() instead
+buttonReset.when_pressed = reset_game
+pause() #wait for enter key to exit program. to wait forever, use pause() instead
