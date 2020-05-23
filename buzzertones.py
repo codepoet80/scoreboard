@@ -20,14 +20,22 @@ class songs:
 			songTarget = self.play_abi_song
 		elif (songName == "elisong"):
 			songTarget = self.play_eli_song
-		else:
-			songTarget = self.play_justbuzz
+		elif (songName == "justbuzz1"):
+			songTarget = self.play_justbuzz_one
+		elif (songName == "justbuzz2"):
+			songTarget = self.play_justbuzz_two
 		song_thread = threading.Thread(target=songTarget)
 		song_thread.start()
 		
-	#just buzz
-	def play_justbuzz(self):
+	#just buzz 1
+	def play_justbuzz_one(self):
 		self.buzzer.play(Tone(midi=60))
+		sleep(1)
+		self.buzzer.stop()
+	
+	#just buzz 2
+	def play_justbuzz_two(self):
+		self.buzzer.play(Tone(midi=70))
 		sleep(1)
 		self.buzzer.stop()
 

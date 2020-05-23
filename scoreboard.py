@@ -1,17 +1,14 @@
 #Simple Score Board, by Jon W, Caleb D and Ben W 1/3/2020
 import os
-import sevensegmentled
 import buzzertones
 import drawscore
-from gpiozero import LED
 from gpiozero import Button
 from time import sleep
 from signal import pause
 
-#init our gpio pins
+#init our gpio pins and variables
 Songs = buzzertones.songs(26)
 resetPin = 21
-doingScore = False
 player1pin = 12
 player1points = 0
 player2pin = 16
@@ -19,6 +16,7 @@ player2points = 0
 button1 = Button(player1pin)
 button2 = Button(player2pin)
 buttonReset = Button(resetPin)
+doingScore = False
 
 #respond to goals
 def player1_scored(button):
@@ -27,7 +25,7 @@ def player1_scored(button):
 	#make sure we don't count the score while we're in the middle of counting the score
 	if (doingScore != True):
 		doingScore = True
-		Songs.play_song("justbuzz")
+		Songs.play_song("justbuzz1")
 		player1points = player1points + 1
 		update_scoreboard()
 		sleep(1)
@@ -39,7 +37,7 @@ def player2_scored(button):
 	#make sure we don't count the score while we're in the middle of counting the score
 	if (doingScore != True):
 		doingScore = True
-		Songs.play_song("justbuzz")
+		Songs.play_song("justbuzz2")
 		player2points = player2points + 1
 		update_scoreboard()
 		sleep(1)
@@ -49,20 +47,23 @@ def player2_scored(button):
 def update_scoreboard():
     global player1points
     global player2points
-    if (player1points == 9) or (player2points == 9):
+    if (player2points > 9):
         game_over()
-    elif (player1points > 9) or (player2points > 9):
+    elif (player1points > 10) or (player2points > 10):
         reset_game()
     else:
-        #print ("Player 1: " + str(player1points) + ", Player 2: " + str(player2points), end="\r")
         drawscore.clear()
         drawscore.score(player1points, player2points)
 
 #do cool game over stuff
 def game_over():
-    print ("", end="\r\n")
-    print("Game over!")
-    print("Score again to start a new game...")
+    global player1points
+    global player2points
+    if (player1points > player2points):
+        Songs.play_song("abisong")
+    else:
+        Songs.play_song("elisong")
+    sleep(2)
     return
 
 #set or reset the game
