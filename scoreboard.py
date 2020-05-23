@@ -2,6 +2,7 @@
 import os
 import sevensegmentled
 import buzzertones
+import drawscore
 from gpiozero import LED
 from gpiozero import Button
 from time import sleep
@@ -26,10 +27,10 @@ def player1_scored(button):
 	#make sure we don't count the score while we're in the middle of counting the score
 	if (doingScore != True):
 		doingScore = True
-		Songs.play_song("abisong")
+		Songs.play_song("justbuzz")
 		player1points = player1points + 1
 		update_scoreboard()
-		sleep(2)
+		sleep(1)
 		doingScore = False
 
 def player2_scored(button):
@@ -38,10 +39,10 @@ def player2_scored(button):
 	#make sure we don't count the score while we're in the middle of counting the score
 	if (doingScore != True):
 		doingScore = True
-		Songs.play_song("elisong")
+		Songs.play_song("justbuzz")
 		player2points = player2points + 1
 		update_scoreboard()
-		sleep(2)
+		sleep(1)
 		doingScore = False
 
 #show latest scores on scoreboard
@@ -53,7 +54,9 @@ def update_scoreboard():
     elif (player1points > 9) or (player2points > 9):
         reset_game()
     else:
-        print ("Player 1: " + str(player1points) + ", Player 2: " + str(player2points), end="\r")
+        #print ("Player 1: " + str(player1points) + ", Player 2: " + str(player2points), end="\r")
+        drawscore.clear()
+        drawscore.score(player1points, player2points)
 
 #do cool game over stuff
 def game_over():
