@@ -19,6 +19,9 @@ buttonReset = Button(resetPin)
 doingScore = False
 gameOver = False
 
+#change text color
+print ("\033[37m")
+
 #respond to goals
 def player1_scored(button):
 	global doingScore
@@ -69,7 +72,7 @@ def do_game_over():
         Songs.play_song("abisong")
     else:
         Songs.play_song("elisong")
-    sleep(2)
+    sleep(4)
     return
 
 #set or reset the game
