@@ -17,6 +17,7 @@ button1 = Button(player1pin)
 button2 = Button(player2pin)
 buttonReset = Button(resetPin)
 doingScore = False
+gameOver = False
 
 #respond to goals
 def player1_scored(button):
@@ -47,20 +48,23 @@ def player2_scored(button):
 def update_scoreboard():
     global player1points
     global player2points
-    if (player2points == 10) or (player1points == 10):
+    global gameOver
+    if (player1points == 10) or (player2points == 10):
         drawscore.clear()
         drawscore.score(player1points, player2points)
-        game_over()
-    elif (player1points > 10) or (player2points > 10):
+        do_game_over()
+    if (gameOver):
         reset_game()
     else:
         drawscore.clear()
         drawscore.score(player1points, player2points)
 
 #do cool game over stuff
-def game_over():
+def do_game_over():
     global player1points
     global player2points
+    global gameOver
+    gameOver = True
     if (player1points > player2points):
         Songs.play_song("abisong")
     else:
@@ -73,6 +77,8 @@ def reset_game():
     global player1points
     global player2points
     global doingScore
+    global gameOver
+    gameOver = False
     doingScore = False
     player1points = 0
     player2points = 0
