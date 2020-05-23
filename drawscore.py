@@ -14,6 +14,8 @@ p2_left = 42
 # A Simple clear screen command for this DEMO...
 def clear():
     for n in range(0, 64, 1): print("\r\n")
+    #change text color
+    print ("\033[37m")
 
 def score(one, two):
 	if (one == 0):
