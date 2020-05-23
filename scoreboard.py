@@ -69,7 +69,7 @@ def do_game_over():
         Songs.play_song("abisong")
     else:
         Songs.play_song("elisong")
-    sleep(4)
+    sleep(8)
     return
 
 #set or reset the game
