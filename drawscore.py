@@ -589,7 +589,7 @@ def score_nine(player):
 def score_win(player):
     left = p1_left
 
-    if player == 1:
+    if player == 2:
         locate("███", left+31, 21)
         locate("███", left+30, 22)
         locate("███", left+29, 23)
