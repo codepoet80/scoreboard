@@ -47,11 +47,11 @@ def player2_scored(button):
 def update_scoreboard():
     global player1points
     global player2points
-    if (player2points > 9) or (player1points > 9):
+    if (player2points == 10) or (player1points == 10):
         drawscore.clear()
         drawscore.score(player1points, player2points)
         game_over()
-    elif (player1points >= 10) or (player2points >= 10):
+    elif (player1points > 10) or (player2points > 10):
         reset_game()
     else:
         drawscore.clear()
